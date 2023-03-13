@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{097FEC7D-FB17-4610-81C1-11A611FAD9F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorSignalRApp", "BlazorSignalRApp", "{8FA269BB-225A-4E78-814D-93F41F2A182B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignalRApp.Server", "src\BlazorSignalRApp\Server\BlazorSignalRApp.Server.csproj", "{298374AD-66FF-4396-938A-E60A68BF8E29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignalRApp.Shared", "src\BlazorSignalRApp\Shared\BlazorSignalRApp.Shared.csproj", "{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignalRApp.Client", "src\BlazorSignalRApp\Client\BlazorSignalRApp.Client.csproj", "{A37DAB64-0A8B-48BB-ACEB-7717484BB93D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E50C26A-C7F7-4130-BFD3-3C9E998146D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E50C26A-C7F7-4130-BFD3-3C9E998146D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E50C26A-C7F7-4130-BFD3-3C9E998146D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E50C26A-C7F7-4130-BFD3-3C9E998146D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298374AD-66FF-4396-938A-E60A68BF8E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298374AD-66FF-4396-938A-E60A68BF8E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298374AD-66FF-4396-938A-E60A68BF8E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298374AD-66FF-4396-938A-E60A68BF8E29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A37DAB64-0A8B-48BB-ACEB-7717484BB93D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37DAB64-0A8B-48BB-ACEB-7717484BB93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37DAB64-0A8B-48BB-ACEB-7717484BB93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37DAB64-0A8B-48BB-ACEB-7717484BB93D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FA269BB-225A-4E78-814D-93F41F2A182B} = {097FEC7D-FB17-4610-81C1-11A611FAD9F1}
+		{298374AD-66FF-4396-938A-E60A68BF8E29} = {8FA269BB-225A-4E78-814D-93F41F2A182B}
+		{A1FA12CD-8ED1-4A7E-9440-AE6C8D8198BC} = {8FA269BB-225A-4E78-814D-93F41F2A182B}
+		{A37DAB64-0A8B-48BB-ACEB-7717484BB93D} = {8FA269BB-225A-4E78-814D-93F41F2A182B}
+	EndGlobalSection
+EndGlobal

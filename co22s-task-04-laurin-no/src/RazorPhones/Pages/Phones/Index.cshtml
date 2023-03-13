@@ -1,0 +1,22 @@
+@page
+@model RazorPhones.Pages.Phones.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Welcome to the Phone database in Razor Pages</h1>
+
+<p>
+    <a asp-page="Add">Add New</a>
+</p>
+
+<ul class="phones">
+    @foreach (var item in Model.Phone.OrderBy(i => i.Make))
+    {
+        <li>
+            @Html.DisplayFor(model => item.Make) @Html.DisplayFor(model => item.Model) <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,27 @@
+﻿@page "/"
+@using SharedLib
+@inject HttpClient Http
+
+<PageTitle>Index</PageTitle>
+
+<h1>Quote master</h1>
+
+@if (_quotes == null)
+{
+    <p>No quotes found.</p>
+}
+else
+{
+    @foreach (var quote in _quotes)
+    {
+        <QuoteItem Quote="quote"/>
+    }
+}
+
+@code
+{
+    private QuoteDTO[]? _quotes;
+
+    protected override async Task OnInitializedAsync()
+        => _quotes = await Http.GetFromJsonAsync<QuoteDTO[]>("/Quotes");
+}

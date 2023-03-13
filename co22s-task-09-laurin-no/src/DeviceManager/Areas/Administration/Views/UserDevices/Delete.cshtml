@@ -1,0 +1,24 @@
+@model DeviceManager.Models.DeviceViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<form asp-action="Delete" asp-route-userId="@Model.UserId" asp-route-id="@Model.Id">
+    <div class="form-group">
+        <label asp-for="UserId" class="control-label"></label>
+        <input asp-for="UserId" class="form-control" readonly value="@Model.UserId"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Id" class="control-label"></label>
+        <input asp-for="Id" class="form-control" readonly value="@Model.Id"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Delete" class="btn btn-danger"/> |
+    <a asp-action="Index">Back to List</a>
+</form>

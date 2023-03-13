@@ -1,0 +1,68 @@
+﻿@page "/chat"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@inject HubUrls HubUrls
+
+
+<PageTitle>Chat</PageTitle>
+
+<div class="form-group">
+    <label>
+        User:
+        <input id="username" @bind="_userInput"/>
+    </label>
+</div>
+<div class="form-group">
+    <label>
+        Message:
+        <input id="themessage" @bind="_messageInput"/>
+    </label>
+</div>
+<button @onclick="Send" id="submitthemessage" disabled="@(!IsConnected)">Send</button>
+
+<div id="messagelist">
+    @foreach (var message in _messages)
+    {
+        <div class="alert alert-success messagenotification">@message.MessageTime @message.User @message.Message</div>
+    }
+</div>
+
+
+@code
+{
+    private HubConnection? _hubConnection;
+    private List<ChatMessageNotification> _messages = new List<ChatMessageNotification>();
+    private string? _userInput;
+    private string? _messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri(HubUrls.ChatHubUrl))
+            .Build();
+
+        _hubConnection.On<ChatMessageNotification>("MessageNotification", msgNot =>
+        {
+            _messages.Add(msgNot);
+            StateHasChanged();
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    private async Task Send()
+    {
+        if (_hubConnection != null && _userInput != null && _messageInput != null)
+        {
+            var msg = new ChatMessage
+            {
+                Message = _messageInput,
+                User = _userInput
+            };
+
+            await _hubConnection.SendAsync("PostMessage", msg);
+        }
+    }
+
+    public bool IsConnected => _hubConnection?.State == HubConnectionState.Connected;
+}

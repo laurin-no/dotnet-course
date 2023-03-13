@@ -1,0 +1,41 @@
+@page "/quotes/add/{User}"
+@using SharedLib
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+<EditForm model="_quote" OnValidSubmit="@HandleValidSubmit">
+    <p>
+        <label>
+            Quote
+            <InputText @bind-Value="_quote.Quote"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Said By
+            <InputText @bind-Value="_quote.SaidBy"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            When
+            <InputDate TValue="DateTime" @bind-Value="_quote.When"/>
+        </label>
+    </p>
+    <button type="submit">Add new</button>
+</EditForm>
+
+<h2>@User</h2>
+
+@code {
+
+    [Parameter]
+    public string User { get; set; }
+
+    private QuoteDTO _quote = new QuoteDTO();
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync($"Quotes/{User}", _quote);
+        NavigationManager.NavigateTo($"Quotes/{User}");
+    }
+}

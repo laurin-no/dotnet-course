@@ -1,0 +1,41 @@
+@page "/quotes/delete/{User}/{Id:int}"
+@using SharedLib
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<h2>@User</h2>
+
+@if (_quote == null)
+{
+    <p>No quote found.</p>
+}
+else
+{
+    <h3>Do you want to delete the following quote?</h3>
+    <QuoteItem Quote="_quote"/>
+    <button onclick="@HandleClick" type="submit">Yes</button>
+}
+
+@code {
+
+    [Parameter]
+    public string User { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private QuoteDTO? _quote;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _quote = await Http.GetFromJsonAsync<QuoteDTO>($"Quotes/{User}/{Id}");
+    }
+
+    private async Task HandleClick()
+    {
+        await Http.DeleteAsync($"Quotes/{User}/{Id}");
+        NavigationManager.NavigateTo($"Quotes/{User}");
+    }
+
+}

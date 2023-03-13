@@ -1,0 +1,45 @@
+@page "/quotes/edit/{User}/{Id:int}"
+@using SharedLib
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<h2>@User</h2>
+
+@if (_quote == null)
+{
+    <p>No quote found.</p>
+}
+else
+{
+    <EditForm Model="_quote" OnValidSubmit="@HandleValidSubmit">
+        <InputText @bind-Value="_quote.Quote"/>
+        <InputDate TValue="DateTime" @bind-Value="_quote.When"/>
+        <InputText @bind-Value="_quote.SaidBy"/>
+        <button type="submit">Submit</button>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public string User { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private QuoteDTO? _quote;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _quote = await Http.GetFromJsonAsync<QuoteDTO>($"Quotes/{User}/{Id}");
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PutAsJsonAsync($"Quotes/{User}/{Id}", _quote);
+        NavigationManager.NavigateTo($"Quotes/{User}");
+    }
+
+}

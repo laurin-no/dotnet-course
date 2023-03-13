@@ -1,0 +1,20 @@
+@page "/Login"
+@inject NavigationManager NavigationManager
+
+<h3>Login</h3>
+
+<input placeholder="username" @bind="_username"/>
+<button @onclick="LoginRedirect">Login</button>
+
+@code {
+    private string? _username;
+
+    private void LoginRedirect()
+    {
+        if (_username != null)
+        {
+            NavigationManager.NavigateTo($"/Quotes/{_username}");
+        }
+    }
+
+}

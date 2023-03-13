@@ -1,0 +1,37 @@
+@page "/address/create"
+@using PeopleLib
+@inject HttpClient Http
+
+<h3>AddressCreate</h3>
+<EditForm model="_address" OnValidSubmit="@HandleValidSubmit">
+    <p>
+        <label>
+            Street Address
+            <InputText @bind-Value="_address.StreetAddress"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Postal Number
+            <InputNumber @bind-Value="_address.PostalNumber"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Postal Address
+            <InputText @bind-Value="_address.PostalAddress"/>
+        </label>
+    </p>
+    <button type="submit">Add new</button>
+
+</EditForm>
+
+@code {
+    private Address _address = new();
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync("/address", _address);
+    }
+
+}

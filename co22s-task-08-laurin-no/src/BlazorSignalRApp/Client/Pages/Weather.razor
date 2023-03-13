@@ -1,0 +1,82 @@
+﻿@page "/weather"
+@using Microsoft.AspNetCore.SignalR.Client
+
+@inject HubUrls HubUrls
+@inject NavigationManager NavigationManager
+
+<PageTitle>Weather</PageTitle>
+
+<EditForm Model="_observation" OnValidSubmit="@Send">
+    <p>
+        <label>
+            Date
+            <InputDate @bind-Value="_observation.Date"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Temperature
+            <InputNumber @bind-Value="_observation.TemperatureC"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Summary
+            <InputText id="summary" @bind-Value="_observation.Summary"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Observation
+            <InputText id="observationtext" @bind-Value="_observation.ObservationText"/>
+        </label>
+    </p>
+    <button type="submit" id="submit">Submit</button>
+</EditForm>
+
+
+<table>
+    <tbody>
+    @foreach (var observation in _observations)
+    {
+        <tr>
+            <td>@observation.Date</td>
+            <td>@observation.TemperatureC</td>
+            <td>@observation.Summary</td>
+            <td>@observation.ObservationText</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code
+{
+    private HubConnection? _hubConnection;
+    private List<WeatherObservation> _observations = new List<WeatherObservation>();
+    private WeatherObservation _observation = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri(HubUrls.WeatherHubUrl))
+            .Build();
+
+        _hubConnection.On<WeatherObservation>("Forecast", observation =>
+        {
+            _observations.Add(observation);
+            StateHasChanged();
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    private async Task Send()
+    {
+        if (_hubConnection != null)
+        {
+            await _hubConnection.SendAsync("SubmitObservation", _observation);
+        }
+    }
+
+    public bool IsConntected => _hubConnection?.State == HubConnectionState.Connected;
+}

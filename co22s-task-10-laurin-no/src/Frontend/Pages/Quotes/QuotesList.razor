@@ -1,0 +1,31 @@
+@page "/quotes/{User}"
+@using SharedLib
+@inject HttpClient Http
+
+<h2>@User</h2>
+
+@if (_quotes == null)
+{
+    <p>No quotes found.</p>
+}
+else
+{
+    @foreach (var quote in _quotes)
+    {
+        <QuoteItem Quote="quote"/>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public string? User { get; set; }
+
+    private QuoteDTO[]? _quotes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _quotes = await Http.GetFromJsonAsync<QuoteDTO[]>($"Quotes/{User}");
+    }
+
+}

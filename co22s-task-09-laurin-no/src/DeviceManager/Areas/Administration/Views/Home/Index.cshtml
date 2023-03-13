@@ -1,0 +1,29 @@
+@model IEnumerable<DeviceManager.Data.AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Users</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Id)</th>
+        <th>@Html.DisplayNameFor(model => model.Email)</th>
+        <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>
+                <a asp-area="Administration" asp-controller="UserDevices" asp-action="Index" asp-route-userId="@item.Id">Devices</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

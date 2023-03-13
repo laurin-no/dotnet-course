@@ -1,0 +1,66 @@
+@page "/contactinfo"
+@using PeopleLib
+@inject HttpClient Http
+
+<h3>ContactInfoPage</h3>
+
+@if (_addressIds == null || _personIds == null)
+{
+    <p>Missing IDs.</p>
+}
+else
+{
+    <EditForm Model="_contactInfo" OnValidSubmit="@HandleValidSubmit">
+        <p>
+            <label>
+                Address
+                <InputSelect @bind-Value="_contactInfo.AddressId" id="foraddress">
+                    @foreach (var id in _addressIds)
+                    {
+                        <option value="@id">@id</option>
+                    }
+                </InputSelect>
+            </label>
+        </p>
+        <p>
+            <label>
+                Person
+                <InputSelect @bind-Value="_contactInfo.PersonId" id="forperson">
+                    @foreach (var id in _personIds)
+                    {
+                        <option value="@id">@id</option>
+                    }
+                </InputSelect>
+            </label>
+        </p>
+        <p>
+            <label>
+                Info
+                <InputTextArea @bind-Value="_contactInfo.Info"/>
+            </label>
+        </p>
+        <button type="submit">Join</button>
+    </EditForm>
+}
+
+@code {
+    private ContactInfo _contactInfo = new();
+
+    private int[]? _addressIds;
+    private int[]? _personIds;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var addresses = await Http.GetFromJsonAsync<Address[]>("Address");
+        var persons = await Http.GetFromJsonAsync<Person[]>("People");
+
+        _addressIds = (addresses ?? Array.Empty<Address>()).Select(i => i.Id).ToArray();
+        _personIds = (persons ?? Array.Empty<Person>()).Select(i => i.Id).ToArray();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync("/contactinfo", _contactInfo);
+    }
+
+}
